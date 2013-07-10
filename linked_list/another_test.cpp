@@ -40,6 +40,11 @@ TEST_CASE( "Construir y push_back" , "[lista_simple_chars]") {
     CHECK ( letra == 'f' );
     // CHECK_NOTHROW (lista.show());
 
+    letra = lista.pop_front();
+    CHECK ( lista.size() == 4 );
+    CHECK ( lista.empty() == false);
+    CHECK ( letra == 'a' );
+
     lista.clear();
     CHECK ( lista.size() == 0 );
     CHECK ( lista.empty() == true);
@@ -48,6 +53,7 @@ TEST_CASE( "Construir y push_back" , "[lista_simple_chars]") {
     CHECK ( lista.size() == 2 );
     CHECK ( lista.empty() == false);
     // CHECK_NOTHROW (lista.show());
+    
 
     ListaSimpleChars otraLista = creaListaSimpleChars();
     otraLista.resize(4);

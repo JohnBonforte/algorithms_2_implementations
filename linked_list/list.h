@@ -60,6 +60,8 @@ class Lista {
          * elemento agregado. */
         void push_back(const TTT &valor);
 
+        // void push_front(const TTT &valor);
+
         /* obtiene el elemento en la posicion 'index' de la 
          * lista.
          * pre: size() > 'index' (osea, que exista un elemento en esa posicion) */
@@ -71,8 +73,12 @@ class Lista {
          * */
         TTT pop_back();
 
+        TTT pop_front();
+
+
     private:
         Node<TTT>* head;
+        Node<TTT>* tail;
 
     public:
         friend class IteradorLista<TTT>;
@@ -118,7 +124,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class TTT>
-Lista<TTT>::Lista():head(0) {
+Lista<TTT>::Lista():head(0), tail(0) {
 }
 
 template <class TTT>
@@ -211,6 +217,7 @@ void Lista<TTT>::push_back(const TTT &valor) {
     // assert(oldSize + 1 == size());
 }
 
+
 template <class TTT>
 TTT Lista<TTT>::pop_back() {
     // int oldSize = size();
@@ -220,6 +227,7 @@ TTT Lista<TTT>::pop_back() {
         valor = head->dato;
         delete head;
         head=0;
+        tail=0;
     }
     else {
         Node<TTT>* temporalNode = head;
@@ -236,6 +244,27 @@ TTT Lista<TTT>::pop_back() {
     }
 
     // assert(oldSize - 1 == size() || (oldSize == 0 && size() == 0));
+    return valor;
+}
+
+template <class TTT>
+TTT Lista<TTT>::pop_front() {
+    int oldSize = size();
+    assert(oldSize > 0);
+    TTT valor;
+
+    if(size() == 1) {
+        valor = head->dato;
+        delete head;
+        head=0;
+        tail=0;
+    }
+    else {
+        valor = head->dato;
+        head = head->next;
+    }
+
+    assert(oldSize - 1 == size() || (oldSize == 0 && size() == 0));
     return valor;
 }
 
