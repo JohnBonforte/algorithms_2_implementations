@@ -2,8 +2,8 @@
 #define FIRST_TREE_H
 
 #include <iostream>
-#include <queue>
 #include <vector>
+#include <deque>
 using std::cout;
 using std::endl;
 
@@ -27,6 +27,7 @@ public:
     Node<TTT>* findNode(const TTT &value);
     Node<TTT>* findParent(const TTT &value);
     void show_level() const;
+    std::vector<TTT> breadthFirstSearch(); 
     std::vector<TTT> traversePreorder(); 
     std::vector<TTT> traversePostorder(); 
     std::vector<TTT> traverseInorder(); 
@@ -34,6 +35,7 @@ private:
     bool contains(Node<TTT>* current, const TTT &value);    
     void insertNode(Node<TTT>* current, const TTT &value);    
     void clearNode(Node<TTT>* current);
+    std::vector<TTT> breadthFirstSearch(Node<TTT>* root); 
     std::vector<TTT> traversePreorder(Node<TTT>* root); 
     std::vector<TTT> traversePostorder(Node<TTT>* root); 
     std::vector<TTT> traverseInorder(Node<TTT>* root); 
@@ -127,11 +129,25 @@ bool Tree<TTT>::contains(Node<TTT>* current, const TTT &value) {
 
 template <class TTT>
 void Tree<TTT>::show_level() const {
-    // int height = 0;
-    std::queue<TTT> line;
-    if(m_root)
-    {
-        line.push_back(m_root->value);
+    // TODO: make a map and store it with the height
+    std::deque< Node<TTT>* > line;
+    int height = 1;
+    while(root) {
+        // result.push_back(root->value);
+        cout << root->value;
+        if(root->left) {
+            line.push_back(root->left);
+        }
+        if(root->right) {
+            line.push_back(root->right);
+        }
+        if(!line.empty()) {
+           root = line.front();
+           line.pop_front();
+        }
+        else {
+            root = 0;
+        }
     }
 }
 
@@ -254,6 +270,34 @@ Node<TTT>* Tree<TTT>::findParent(const TTT &value, Node<TTT>* root){
 }
 
 // template <class TTT>
+template <class TTT>
+std::vector<TTT> Tree<TTT>::breadthFirstSearch() {
+    return breadthFirstSearch(m_root);
+}
+
+template <class TTT>
+std::vector<TTT> Tree<TTT>::breadthFirstSearch(Node<TTT>* root) {
+    std::deque< Node<TTT>* > line;
+    std::vector<TTT> result;
+    while(root) {
+        result.push_back(root->value);
+        if(root->left) {
+            line.push_back(root->left);
+        }
+        if(root->right) {
+            line.push_back(root->right);
+        }
+        if(!line.empty()) {
+           root = line.front();
+           line.pop_front();
+        }
+        else {
+            root = 0;
+        }
+    }
+    return result;
+}
+
 template <class TTT>
 std::vector<TTT> Tree<TTT>::traversePreorder(){ 
     return traversePreorder(m_root);

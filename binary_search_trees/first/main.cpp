@@ -38,6 +38,11 @@ TEST_CASE( "tree" , "[insertion]") {
     std::vector<int> inorder({7, 9, 14, 17, 23, 31});
     CHECK(true == equal(result.begin(), result.end(),
                   inorder.begin()));
+    // check breadthfirstsearch
+    result = exampleTree.breadthFirstSearch();
+    std::vector<int> bfs({23, 14, 31, 7, 17, 9});
+    CHECK(true == equal(result.begin(), result.end(),
+                  bfs.begin()));
 
     for(auto it=data.begin(); it!=data.end(); ++it) {
         CHECK (exampleTree.contains(*it) == true);
